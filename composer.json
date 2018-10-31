@@ -5,8 +5,8 @@
   "type": "library",
   "version": "1.0.0",
   "require": {
-    "php": ">=7.0.0",
-    "laravel/framework": ">=5.5.*",
+    "php": "^7.0.0",
+    "laravel/framework": "^5.5.0",
     "elkuku/crowdin-api": "^2.0"
   },
   "autoload": {
