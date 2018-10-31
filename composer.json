@@ -20,5 +20,6 @@
         "CrowdinServiceProvider"
       ]
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
