@@ -1,7 +1,5 @@
 <?php
 
-namespace MacPaw\LaravelCrowdinIntegration;
-
 class CrowdinServiceProvider extends ServiceProvider
 {
     /**
