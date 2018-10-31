@@ -1,5 +1,7 @@
 <?php
 
+namespace MacPaw\LaravelCrowdinIntegration;
+
 use Illuminate\Support\ServiceProvider;
 
 class CrowdinServiceProvider extends ServiceProvider
@@ -20,11 +22,10 @@ class CrowdinServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ( function_exists( "config_path" ) )
-        {
-            $this->publishes( array(
-                __DIR__ . '/../config/crowdin.php' => config_path( 'crowdin.php' ) ,
-            ) );
+        if (function_exists("config_path")) {
+            $this->publishes(array(
+                __DIR__ . '/../config/crowdin.php' => config_path('crowdin.php'),
+            ));
         }
         if ($this->app->runningInConsole()) {
             $this->commands([
