@@ -1,0 +1,27 @@
+{
+  "name": "macpaw/laravel-crowdin-integration",
+  "description": "Automate translations uploading/downloading",
+  "license": "MIT",
+  "keywords": ["crowdin"],
+  "type": "library",
+  "require": {
+    "php": ">=7.0.0",
+    "laravel/framework": "5.5.*"
+  },
+  "require-dev": {
+    "elkuku/crowdin-api": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MacPaw\\LaravelCrowdinIntegration\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CrowdinServiceProvider"
+      ]
+    }
+  }
+}
