@@ -17,7 +17,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "MacPaw\\LaravelCrowdinIntegration\\CrowdinServiceProvider"
+        "CrowdinServiceProvider"
       ]
     }
   },
