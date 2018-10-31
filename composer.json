@@ -7,9 +7,7 @@
   "version": "0.1.0",
   "require": {
     "php": ">=7.0.0",
-    "laravel/framework": "5.5.*"
-  },
-  "require-dev": {
+    "laravel/framework": "5.5.*",
     "elkuku/crowdin-api": "^2.0"
   },
   "autoload": {
@@ -17,7 +15,6 @@
       "MacPaw\\LaravelCrowdinIntegration\\": "src/"
     }
   },
-  "minimum-stability": "dev",
   "extra": {
     "laravel": {
       "providers": [
