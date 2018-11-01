@@ -21,10 +21,5 @@
       ]
     }
   },
-  "scripts": {
-    "post-package-install": [
-      "php artisan vendor:publish"
-    ]
-  },
   "minimum-stability": "dev"
 }

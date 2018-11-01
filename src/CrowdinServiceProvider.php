@@ -34,4 +34,18 @@ class CrowdinServiceProvider extends ServiceProvider
             ]);
         }
     }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     *
+     * @codeCoverageIgnore
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/crowdin.php' , 'crowdin'
+        );
+    }
 }
