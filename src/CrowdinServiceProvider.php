@@ -23,7 +23,7 @@ class CrowdinServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/crowdin.php' => config_path('crowdin.php'),
+            __DIR__ . '/../config/crowdin.php' => config_path('crowdin.php'),
         ]);
         if ($this->app->runningInConsole()) {
             $this->commands([
