@@ -33,7 +33,9 @@ class Build extends Command
         $crowdin = new Crowdin(config('crowdin.project_id'), config('crowdin.api_key'));
 
         $res = $crowdin->translation->export();
-        
-        dd($res);
+        $status = $crowdin->translation->getStatus();
+
+        var_dump($res);
+        var_dump($status);
     }
 }
