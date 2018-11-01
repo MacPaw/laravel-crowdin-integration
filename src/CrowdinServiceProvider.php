@@ -31,6 +31,7 @@ class CrowdinServiceProvider extends ServiceProvider
                 \MacPaw\LaravelCrowdinIntegration\Crowdin\DownloadAll::class,
                 \MacPaw\LaravelCrowdinIntegration\Crowdin\UpdateFile::class,
                 \MacPaw\LaravelCrowdinIntegration\Crowdin\Upload::class,
+                \MacPaw\LaravelCrowdinIntegration\Crowdin\Build::class,
             ]);
         }
     }
@@ -44,8 +45,6 @@ class CrowdinServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/crowdin.php' , 'crowdin'
-        );
+        $this->mergeConfigFrom(__DIR__ . '/../config/crowdin.php', 'crowdin');
     }
 }

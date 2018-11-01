@@ -36,20 +36,18 @@ class Upload extends Command
         $added = 0;
 
         foreach ($langFiles as $file) {
-            try{
+            try {
                 $this->callSilent('crowdin:add', [
                     'filename' => $file
                 ]);
                 $added++;
-            }
-            catch (\Exception $exception) {
-                try{
+            } catch (\Exception $exception) {
+                try {
                     $this->callSilent('crowdin:update', [
                         'filename' => $file
                     ]);
                     $updated++;
-                }
-                catch (\Exception $exception) {
+                } catch (\Exception $exception) {
 
                 }
             }
@@ -59,7 +57,7 @@ class Upload extends Command
         $bar->finish();
         $this->line("\n");
 
-        if($added > 0 || $updated > 0) {
+        if ($added > 0 || $updated > 0) {
             $this->table(['added', 'updated'], [[$added, $updated]]);
         } else {
             $this->info('Nothing to export');
@@ -71,7 +69,7 @@ class Upload extends Command
     protected function getFilesNameFromDir($dir): array
     {
         if (!is_dir($dir)) {
-            throw new \RuntimeException('I\'s not a dir:'. $dir);
+            throw new \RuntimeException('I\'s not a dir:' . $dir);
         }
 
         return array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);

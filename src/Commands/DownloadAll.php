@@ -51,12 +51,15 @@ class DownloadAll extends Command
 
         foreach ($mapping as $dirInProject => $langDir) {
             $langDirFull = $thisLangDir . DIRECTORY_SEPARATOR . $dirInProject;
-            $crowdinDirFull = $destination . DIRECTORY_SEPARATOR . $langDir . DIRECTORY_SEPARATOR . $dirInCrowdinProject;
+            $crowdinLangDir = $destination . DIRECTORY_SEPARATOR . $langDir;
+            $crowdinDirFull = $dirInCrowdinProject ? $crowdinLangDir . DIRECTORY_SEPARATOR . $dirInCrowdinProject : $crowdinLangDir;
             if (is_dir($langDirFull) || mkdir($langDirFull) || is_dir($langDirFull)) {
                 $langFiles = $this->getFilesNameFromDir($crowdinDirFull);
                 foreach ($langFiles as $langFile) {
-                    copy($crowdinDirFull . DIRECTORY_SEPARATOR . $langFile,
-                        $langDirFull . DIRECTORY_SEPARATOR . $langFile);
+                    if (is_file($crowdinDirFull . DIRECTORY_SEPARATOR . $langFile)) {
+                        copy($crowdinDirFull . DIRECTORY_SEPARATOR . $langFile,
+                            $langDirFull . DIRECTORY_SEPARATOR . $langFile);
+                    }
                 }
             }
 
@@ -69,7 +72,7 @@ class DownloadAll extends Command
     protected function getFilesNameFromDir($dir): array
     {
         if (!is_dir($dir)) {
-            throw new \RuntimeException('I\'s not a dir:'. $dir);
+            throw new \RuntimeException('I\'s not a dir:' . $dir);
         }
 
         return array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);

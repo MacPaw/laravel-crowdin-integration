@@ -32,19 +32,17 @@ class UpdateFile extends Command
     {
         $crowdin = new Crowdin(config('crowdin.project_id'), config('crowdin.api_key'));
 
-        if ($langFile = $this->getLanguageFile($this->argument('filename'))) {
-            $crowdin->file->update($langFile);
-        }
+        $crowdin->file->update($this->getLanguageFile($this->argument('filename')));
     }
 
     protected function getLanguageFile($fileName)
     {
         $pathInfo = $this->getPathInfo($fileName);
         $dirInCrowdinProject = config('crowdin.crowdin_dir', false);
-        $crowdinPath = $dirInCrowdinProject ? DIRECTORY_SEPARATOR . $dirInCrowdinProject : DIRECTORY_SEPARATOR;
+        $crowdinPath = $dirInCrowdinProject ? DIRECTORY_SEPARATOR . $dirInCrowdinProject . DIRECTORY_SEPARATOR : DIRECTORY_SEPARATOR;
 
         return new Languagefile($pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'],
-            $crowdinPath . DIRECTORY_SEPARATOR . $pathInfo['basename']);
+            $crowdinPath . $pathInfo['basename']);
     }
 
     protected function getPathInfo($fileName)

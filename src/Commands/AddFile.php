@@ -34,19 +34,7 @@ class AddFile extends Command
         $crowdin = new Crowdin(config('crowdin.project_id'), config('crowdin.api_key'));
         $pathInfo = $this->getPathInfo($this->argument('filename'));
 
-        if ($langFile = $this->getLanguageFile($this->argument('filename'))) {
-            $crowdin->file->add($langFile, $pathInfo['extension']);
-        }
-    }
-
-    protected function getLanguageFile($fileName)
-    {
-        $pathInfo = $this->getPathInfo($fileName);
-        $dirInCrowdinProject = config('crowdin.crowdin_dir', false);
-        $crowdinPath = $dirInCrowdinProject ? DIRECTORY_SEPARATOR . $dirInCrowdinProject : DIRECTORY_SEPARATOR;
-
-        return new Languagefile($pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'],
-            $crowdinPath . DIRECTORY_SEPARATOR . $pathInfo['basename']);
+        $crowdin->file->add($this->getLanguageFile($this->argument('filename')), $pathInfo['extension']);
     }
 
     protected function getPathInfo($fileName)
@@ -60,5 +48,15 @@ class AddFile extends Command
         }
 
         return $pathInfo;
+    }
+
+    protected function getLanguageFile($fileName)
+    {
+        $pathInfo = $this->getPathInfo($fileName);
+        $dirInCrowdinProject = config('crowdin.crowdin_dir', false);
+        $crowdinPath = $dirInCrowdinProject ? DIRECTORY_SEPARATOR . $dirInCrowdinProject . DIRECTORY_SEPARATOR : DIRECTORY_SEPARATOR;
+
+        return new Languagefile($pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'],
+            $crowdinPath . $pathInfo['basename']);
     }
 }
