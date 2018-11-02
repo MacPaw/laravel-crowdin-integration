@@ -39,6 +39,9 @@ class DownloadAll extends Command
         $dirInCrowdinProject = config('crowdin.crowdin_dir', false);
 
         $destination = $thisLangDir . 'all.' . Str::random();
+
+        $this->call('crowdin:build');
+
         $crowdin->translation->download('all.zip', $destination . '.zip');
 
         try {
@@ -55,12 +58,20 @@ class DownloadAll extends Command
             $crowdinDirFull = $dirInCrowdinProject ? $crowdinLangDir . DIRECTORY_SEPARATOR . $dirInCrowdinProject : $crowdinLangDir;
             if (is_dir($langDirFull) || mkdir($langDirFull) || is_dir($langDirFull)) {
                 $langFiles = $this->getFilesNameFromDir($crowdinDirFull);
+                $this->info("Pricesing lang: " . $dirInProject . "\n");
+                $bar = $this->output->createProgressBar(count($langFiles));
+
                 foreach ($langFiles as $langFile) {
                     if (is_file($crowdinDirFull . DIRECTORY_SEPARATOR . $langFile)) {
                         copy($crowdinDirFull . DIRECTORY_SEPARATOR . $langFile,
                             $langDirFull . DIRECTORY_SEPARATOR . $langFile);
                     }
+
+                    $bar->advance();
                 }
+
+                $bar->finish();
+                $this->line("\n");
             }
 
         }
