@@ -15,7 +15,7 @@ Add repository rout to composer.json:
 
 Install the package via composer:
 
-```composer require macpaw/laravel-crowdin-integration:dev-master --dev```
+```composer require macpaw/laravel-crowdin-integration --dev```
 
 By default, the package uses the following environment variables
 ```
