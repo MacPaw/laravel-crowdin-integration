@@ -4,7 +4,7 @@
   "keywords": ["crowdin", "laravel"],
   "license": "MIT",
   "type": "library",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "require": {
     "php": "^7.0.0",
     "laravel/framework": "^5.5.0",
