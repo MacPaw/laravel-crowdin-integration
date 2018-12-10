@@ -2,17 +2,6 @@
 Automate uploading/downloading translations 
 ## Installation
 
-Add repository rout to composer.json: 
-
-```
-"repositories": [
-   {
-       "type": "git",
-       "url": "https://github.com/MacPaw/laravel-crowdin-integration.git"
-   }
-],
-```
-
 Install the package via composer:
 
 ```composer require macpaw/laravel-crowdin-integration --dev```
