@@ -81,18 +81,10 @@ class DownloadAll extends BaseCommand
         $this->rrmdir($destination);
     }
 
-    protected function getFilesNameFromDir($dir): array
-    {
-        if (!is_dir($dir)) {
-            throw new RuntimeException('It\'s not a dir:' . $dir);
-        }
-
-        return array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);
-    }
-
     protected function rrmdir($dir): void
     {
         $objects = $this->getFilesNameFromDir($dir);
+
         foreach ($objects as $object) {
             if (is_dir($dir . DIRECTORY_SEPARATOR . $object)) {
                 $this->rrmdir($dir . DIRECTORY_SEPARATOR . $object);
@@ -100,6 +92,7 @@ class DownloadAll extends BaseCommand
                 unlink($dir . DIRECTORY_SEPARATOR . $object);
             }
         }
+
         reset($objects);
         rmdir($dir);
     }

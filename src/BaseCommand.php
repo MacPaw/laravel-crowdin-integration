@@ -8,6 +8,15 @@ use RuntimeException;
 
 class BaseCommand extends Command
 {
+    protected function getFilesNameFromDir($dir): array
+    {
+        if (!is_dir($dir)) {
+            throw new RuntimeException('Invalid directory provided:' . $dir);
+        }
+
+        return array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);
+    }
+
     protected function getPathInfo($fileName)
     {
         $thisLangDir = base_path('resources') . '/lang';
@@ -15,7 +24,7 @@ class BaseCommand extends Command
 
         $pathInfo = $fileName ? pathinfo($thisLangDir . '/' . $defaultLang . '/' . $fileName) : false;
         if (empty($pathInfo['extension'])) {
-            throw new RuntimeException('wrong file extension');
+            throw new RuntimeException('Invalid file extension');
         }
 
         return $pathInfo;

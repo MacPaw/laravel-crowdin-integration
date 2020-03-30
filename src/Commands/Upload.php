@@ -4,7 +4,6 @@ namespace MacPaw\LaravelCrowdinIntegration\Commands;
 
 use Exception;
 use MacPaw\LaravelCrowdinIntegration\BaseCommand;
-use RuntimeException;
 
 class Upload extends BaseCommand
 {
@@ -15,14 +14,12 @@ class Upload extends BaseCommand
      */
     protected $signature = 'crowdin:upload';
 
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Adding or Updating all files to Crowdin project';
-
 
     /**
      * Execute the console command.
@@ -73,14 +70,5 @@ class Upload extends BaseCommand
         }
 
         $this->line("\n");
-    }
-
-    protected function getFilesNameFromDir($dir): array
-    {
-        if (!is_dir($dir)) {
-            throw new RuntimeException('It\'s not a dir:' . $dir);
-        }
-
-        return array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);
     }
 }
