@@ -1,10 +1,11 @@
 <?php
 
-namespace MacPaw\LaravelCrowdinIntegration\Crowdin;
+namespace MacPaw\LaravelCrowdinIntegration\Commands;
 
-use Illuminate\Console\Command;
+use Exception;
+use MacPaw\LaravelCrowdinIntegration\BaseCommand;
 
-class Upload extends Command
+class Upload extends BaseCommand
 {
     /**
      * The name and signature of the console command.
@@ -13,7 +14,6 @@ class Upload extends Command
      */
     protected $signature = 'crowdin:upload';
 
-
     /**
      * The console command description.
      *
@@ -21,15 +21,16 @@ class Upload extends Command
      */
     protected $description = 'Adding or Updating all files to Crowdin project';
 
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
-        $langFiles = $this->getFilesNameFromDir(base_path('resources') . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR . 'en');
+        $langFiles = $this->getFilesNameFromDir(
+            base_path('resources') . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR . 'en'
+        );
 
         $bar = $this->output->createProgressBar(count($langFiles));
         $updated = 0;
@@ -37,18 +38,23 @@ class Upload extends Command
 
         foreach ($langFiles as $file) {
             try {
-                $this->callSilent('crowdin:add', [
-                    'filename' => $file
-                ]);
+                $this->callSilent(
+                    'crowdin:add',
+                    [
+                        'filename' => $file,
+                    ]
+                );
                 $added++;
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 try {
-                    $this->callSilent('crowdin:update', [
-                        'filename' => $file
-                    ]);
+                    $this->callSilent(
+                        'crowdin:update',
+                        [
+                            'filename' => $file,
+                        ]
+                    );
                     $updated++;
-                } catch (\Exception $exception) {
-
+                } catch (Exception $exception) {
                 }
             }
             $bar->advance();
@@ -62,16 +68,7 @@ class Upload extends Command
         } else {
             $this->info('Nothing to export');
         }
+
         $this->line("\n");
-
-    }
-
-    protected function getFilesNameFromDir($dir): array
-    {
-        if (!is_dir($dir)) {
-            throw new \RuntimeException('I\'s not a dir:' . $dir);
-        }
-
-        return array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);
     }
 }
