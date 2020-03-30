@@ -18,7 +18,6 @@ class DownloadAll extends BaseCommand
      */
     protected $signature = 'crowdin:download';
 
-
     /**
      * The console command description.
      *
@@ -26,13 +25,20 @@ class DownloadAll extends BaseCommand
      */
     protected $description = 'Download a zip file containing all language files from Crowdin';
 
+    protected $crowdin;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->crowdin = new Crowdin(config('crowdin.project_id'), config('crowdin.api_key'));
+    }
 
     /**
      * Execute the console command.
      */
     public function handle(): void
     {
-        $crowdin = new Crowdin(config('crowdin.project_id'), config('crowdin.api_key'));
         $mapping = config('crowdin.mapping', null);
         $thisLangDir = base_path('resources') . '/lang';
         $dirInCrowdinProject = config('crowdin.crowdin_dir', false);
@@ -41,7 +47,7 @@ class DownloadAll extends BaseCommand
 
         $this->call('crowdin:build');
 
-        $crowdin->translation->download('all.zip', $destination . '.zip');
+        $this->crowdin->translation->download('all.zip', $destination . '.zip');
 
         try {
             $zip = Zip::open($destination . '.zip');
