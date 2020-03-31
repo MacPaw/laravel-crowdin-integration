@@ -1,13 +1,11 @@
 <?php
 
-namespace MacPaw\LaravelCrowdinIntegration\Crowdin;
+namespace MacPaw\LaravelCrowdinIntegration\Commands;
 
-use App\Services\Crowdin\Init;
 use ElKuKu\Crowdin\Crowdin;
-use ElKuKu\Crowdin\Languagefile;
-use Illuminate\Console\Command;
+use MacPaw\LaravelCrowdinIntegration\BaseCommand;
 
-class UpdateFile extends Command
+class UpdateFile extends BaseCommand
 {
     /**
      * The name and signature of the console command.
@@ -28,33 +26,10 @@ class UpdateFile extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $crowdin = new Crowdin(config('crowdin.project_id'), config('crowdin.api_key'));
 
         $crowdin->file->update($this->getLanguageFile($this->argument('filename')));
-    }
-
-    protected function getLanguageFile($fileName)
-    {
-        $pathInfo = $this->getPathInfo($fileName);
-        $dirInCrowdinProject = config('crowdin.crowdin_dir', false);
-        $crowdinPath = $dirInCrowdinProject ? DIRECTORY_SEPARATOR . $dirInCrowdinProject . DIRECTORY_SEPARATOR : DIRECTORY_SEPARATOR;
-
-        return new Languagefile($pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'],
-            $crowdinPath . $pathInfo['basename']);
-    }
-
-    protected function getPathInfo($fileName)
-    {
-        $thisLangDir = base_path('resources') . '/lang';
-        $defaultLang = config('crowdin.defaultLang', 'en');
-
-        $pathInfo = $fileName ? pathinfo($thisLangDir . '/' . $defaultLang . '/' . $fileName) : false;
-        if (empty($pathInfo['extension'])) {
-            throw new \RuntimeException('wrong file extension');
-        }
-
-        return $pathInfo;
     }
 }

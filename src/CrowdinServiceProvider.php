@@ -3,6 +3,11 @@
 namespace MacPaw\LaravelCrowdinIntegration;
 
 use Illuminate\Support\ServiceProvider;
+use MacPaw\LaravelCrowdinIntegration\Commands\AddFile;
+use MacPaw\LaravelCrowdinIntegration\Commands\Build;
+use MacPaw\LaravelCrowdinIntegration\Commands\DownloadAll;
+use MacPaw\LaravelCrowdinIntegration\Commands\UpdateFile;
+use MacPaw\LaravelCrowdinIntegration\Commands\Upload;
 
 class CrowdinServiceProvider extends ServiceProvider
 {
@@ -22,17 +27,22 @@ class CrowdinServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/../config/crowdin.php' => config_path('crowdin.php'),
-        ]);
+        $this->publishes(
+            [
+                __DIR__ . '/../config/crowdin.php' => config_path('crowdin.php'),
+            ]
+        );
+
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                \MacPaw\LaravelCrowdinIntegration\Crowdin\AddFile::class,
-                \MacPaw\LaravelCrowdinIntegration\Crowdin\DownloadAll::class,
-                \MacPaw\LaravelCrowdinIntegration\Crowdin\UpdateFile::class,
-                \MacPaw\LaravelCrowdinIntegration\Crowdin\Upload::class,
-                \MacPaw\LaravelCrowdinIntegration\Crowdin\Build::class,
-            ]);
+            $this->commands(
+                [
+                    AddFile::class,
+                    DownloadAll::class,
+                    UpdateFile::class,
+                    Upload::class,
+                    Build::class,
+                ]
+            );
         }
     }
 
