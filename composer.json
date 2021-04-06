@@ -9,7 +9,7 @@
   "type": "library",
   "require": {
     "php": "^7.2",
-    "laravel/framework": "^7.0",
+    "laravel/framework": "^8.0",
     "elkuku/crowdin-api": "@dev",
     "zanysoft/laravel-zip": "^1.0"
   },
