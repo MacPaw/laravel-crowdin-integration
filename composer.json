@@ -1,5 +1,5 @@
 {
-  "name": "macpaw/laravel-crowdin-integration",
+  "name": "georgii-web/laravel-crowdin-integration",
   "description": "Automate translations uploading/downloading",
   "keywords": [
     "crowdin",
